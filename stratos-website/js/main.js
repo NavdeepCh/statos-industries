@@ -1,0 +1,1 @@
+document.getElementById('m').onclick=()=>document.getElementById('n').classList.toggle('open');

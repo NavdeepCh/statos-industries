@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stratos Global Technologies — Enterprise Software Consulting & Academic Incubator</title>
+  
+  <!-- Typography: DM Sans, Manrope, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    :root {
+      --ink: #171b19;
+      --muted: #6b716c;
+      --green: #c9f36a;
+      --paper: #f5f5f0;
+      --white: #ffffff;
+      --line: #d9ddd5;
+      --dark: #202723;
+      --dark-green: #2d3b21;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0;
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Manrope", sans-serif;
+      letter-spacing: -.05em;
+      margin: 0;
+    }
+
+    .top-notice {
+      background: #d9efb0;
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: .04em;
+      padding: 8px 14px;
+      color: #2d3b21;
+      font-weight: 600;
+    }
+
+    .site-header {
+      height: 82px;
+      padding: 0 6.3%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--paper);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(0,0,0,.08);
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .main-nav > a { transition: opacity .2s, color .2s; }
+    .main-nav > a:hover { opacity: .6; }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 15px 22px;
+      font-size: 11px;
+      font-weight: 700;
+      transition: transform .2s, background .2s, box-shadow .2s;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-radius: 2px;
+    }
+    .button:hover { transform: translateY(-3px); }
+    .button span { font-size: 15px; }
+
+    .button-green { background: var(--green); color: #1c2418; border: none; }
+    .button-green:hover { background: #d8ff88; }
+    .button-dark { background: var(--ink); color: var(--white); border: none; }
+    .button-dark:hover { background: #39443a; }
+    .button-outline { border: 1px solid #8b9789; color: var(--white); background: transparent; }
+    .button-outline:hover { background: rgba(255,255,255,.08); }
+
+    .hero {
+      height: min(740px, calc(100vh - 105px));
+      min-height: 580px;
+      position: relative;
+      background: #202723;
+      overflow: hidden;
+      color: white;
+    }
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      background-image: url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2200&q=85");
+      background-size: cover;
+      background-position: center 50%;
+      transform: scale(1.02);
+      animation: heroReveal 1.2s ease-out both;
+    }
+    .hero-shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(10,17,14,.92) 0%, rgba(10,17,14,.65) 50%, rgba(10,17,14,.2) 100%),
+                  linear-gradient(0deg, rgba(8,12,10,.65), transparent 40%);
+    }
+    .hero-content {
+      position: absolute;
+      left: 8.5%;
+      top: 16%;
+      max-width: 720px;
+    }
+
+    @keyframes heroReveal {
+      from { transform: scale(1.08); opacity: .65; }
+      to { transform: scale(1.02); opacity: 1; }
+    }
+
+    .section-pad { padding: 90px 8.5%; }
+
+    .products { background: #e9ebe4; }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: #f7f8f4;
+      min-width: 0;
+      transition: transform .25s, box-shadow .25s;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.06);
+    }
+    .product-image {
+      height: 240px;
+      background-size: cover;
+      background-position: center;
+      filter: saturate(.85);
+    }
+
+    .circle-link {
+      position: absolute;
+      right: 25px;
+      top: 28px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #c6ccc0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      transition: background .2s, border-color .2s;
+    }
+    .circle-link:hover { background: var(--green); border-color: var(--green); color: #1c2418; }
+
+    .pulse-glow { animation: pulseGlow 2.5s infinite; }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(201, 243, 106, 0.4); }
+      50% { box-shadow: 0 0 30px rgba(201, 243, 106, 0.85); }
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    @media (max-width: 1024px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .main-nav { display: none; }
+      .main-nav.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 82px; left: 0; right: 0;
+        background: var(--paper);
+        padding: 24px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- TOP NOTICE TICKER -->
+  <div class="top-notice flex items-center justify-center gap-3">
+    <span class="px-2 py-0.5 rounded bg-[#2d3b21] text-[#c9f36a] text-[10px] font-mono font-bold uppercase tracking-wider">GLOBAL ADVISORY</span>
+    <span>⚡ Stratos Global Awarded CMMI Level 5 Re-certification for Distributed Cloud Microservices & AI Security Frameworks.</span>
+    <a href="achievements/index.html" class="underline hover:text-black font-bold hidden md:inline ml-2">Read Press Release ↗</a>
+  </div>
+
+  <!-- STICKY SITE HEADER -->
+  <header class="site-header" id="top">
+    <a href="index.html" class="flex items-center gap-3.5 group">
+      <div class="relative w-11 h-11 flex items-center justify-center">
+        <svg width="44" height="44" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,5 90,27 90,73 50,95 10,73 10,27" stroke="#171b19" stroke-width="2.5" stroke-dasharray="8 4" fill="none" />
+          <polygon points="50,15 80,32 50,49 20,32" fill="#171b19" opacity="0.95" />
+          <polygon points="20,32 50,49 50,83 20,66" fill="#202723" />
+          <polygon points="50,49 80,32 80,66 50,83" fill="#c9f36a" />
+          <polygon points="50,33 65,42 50,51 35,42" fill="#ffffff" />
+          <path d="M50 51 L65 42 L65 60 L50 69 Z" fill="#2d3b21" />
+          <path d="M50 51 L35 42 L35 60 L50 69 Z" fill="#171b19" />
+          <circle cx="50" cy="15" r="3" fill="#c9f36a" />
+          <circle cx="80" cy="32" r="3" fill="#171b19" />
+          <circle cx="50" cy="83" r="3" fill="#c9f36a" />
+        </svg>
+      </div>
+      <div>
+        <span class="font-heading font-extrabold text-xl tracking-wider text-[#171b19] block leading-none">STRATOS<span class="text-[#83ad3e]">.</span></span>
+        <span class="text-[9px] font-mono text-[#6b716c] font-bold tracking-widest uppercase">GLOBAL TECHNOLOGIES</span>
+      </div>
+    </a>
+
+    <nav class="main-nav" id="nav-menu">
+      <a href="services/index.html">Services</a>
+      <a href="works/index.html">Client Works</a>
+      <a href="achievements/index.html">Achievements</a>
+      <a href="careers/index.html">Careers</a>
+      <a href="#verify-section" class="text-[#0369a1] font-mono font-bold flex items-center gap-1">
+        <i class="fa-solid fa-shield-halved text-xs"></i> /verify Portal
+      </a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href="contact.html" class="px-4 py-2.5 rounded bg-[#171b19] text-[#c9f36a] text-xs font-bold font-mono hover:bg-[#323e34] transition flex items-center gap-2 border border-[#c9f36a]/40 shadow-sm">
+        <span>Consult Enterprise Desk</span>
+      </a>
+      <button class="lg:hidden text-2xl text-[#171b19] p-2" onclick="toggleNav()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-image"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-content space-y-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#c9f36a]/15 text-[#c9f36a] text-xs font-mono font-bold border border-[#c9f36a]/30">
+          <i class="fa-solid fa-award"></i>
+          <span>CMMI LEVEL 5 & ISO 27001:2022 ACCREDITED ENTERPRISE</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.02] tracking-tight">
+          Engineering Enterprise Resilience &<br>
+          <em class="not-italic text-[#c9f36a]">Digital Intelligence.</em>
+        </h1>
+
+        <p class="text-sm sm:text-base text-gray-200 leading-relaxed max-w-xl">
+          CMMI Level 5 & ISO 27001:2022 Accredited Global Technology Services, Distributed Cloud Microservices, and Industrial Engineering Infrastructure.
+        </p>
+
+        <div class="pt-2 flex flex-wrap items-center gap-4">
+          <a href="services/index.html" class="button button-green">
+            Explore Enterprise Solutions <span>↗</span>
+          </a>
+          <a href="works/index.html" class="button button-outline">
+            View Client Case Studies <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="absolute left-[8.5%] right-[8.5%] bottom-7 flex items-center justify-between text-xs font-mono text-gray-300">
+        <div class="flex items-center gap-4">
+          <span class="font-bold text-[#c9f36a]">01 / 04</span>
+          <span class="w-16 h-[1px] bg-white/40"></span>
+          <span>Enterprise Technology Services & Global Engineering Operations</span>
+        </div>
+        <a href="#intro" class="w-9 h-9 border border-white/40 grid place-items-center text-lg hover:border-[#c9f36a] transition hidden sm:grid">↓</a>
+      </div>
+    </section>
+
+    <!-- INTRO & METRICS -->
+    <section class="intro section-pad border-b border-[#d9ddd5]" id="intro">
+      <div class="flex items-center gap-3 text-xs font-bold tracking-widest text-[#606a5d] uppercase mb-8">
+        <span class="w-7 h-[2px] bg-[#91bd48]"></span>
+        <span>WHO WE ARE</span>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-8">
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-[#171b19] leading-tight">
+            Better software systems begin with <span class="text-[#8a9285]">what you don't see.</span>
+          </h2>
+        </div>
+        <div class="lg:col-span-4 space-y-4">
+          <p class="text-xs sm:text-sm text-[#6b716c] leading-relaxed">
+            Stratos Global Technologies engineers high-availability microservices, predictive machine learning pipelines, and self-paced industrial project modules with real-time credential verification infrastructure.
+          </p>
+          <a href="services/index.html" class="text-xs font-bold tracking-wider uppercase border-b border-[#171b19] pb-2 inline-flex items-center gap-4 hover:opacity-70 transition">
+            Explore Practice Areas <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-16 pt-8 border-t border-[#d9ddd5] grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div>
+          <strong class="text-4xl sm:text-5xl font-heading font-extrabold text-[#171b19] block">18<span class="text-[#83ad3e]">+</span></strong>
+          <span class="text-xs text-[#6b716c] font-medium uppercase font-mono">Global Tech Hubs</span>
+        </div>
+        <div>
+          <strong class="text-4xl sm:text-5xl font-heading font-extrabold text-[#171b19] block">CMMI 5</strong>
+          <span class="text-xs text-[#6b716c] font-medium uppercase font-mono">Level 5 Accredited</span>
+        </div>
+        <div>
+          <strong class="text-4xl sm:text-5xl font-heading font-extrabold text-[#171b19] block">99.99%</strong>
+          <span class="text-xs text-[#6b716c] font-medium uppercase font-mono">Cloud SLA Uptime</span>
+        </div>
+        <div>
+          <strong class="text-4xl sm:text-5xl font-heading font-extrabold text-[#171b19] block">14,000<span class="text-[#83ad3e]">+</span></strong>
+          <span class="text-xs text-[#6b716c] font-medium uppercase font-mono">Issued Credentials</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRACTICE AREAS -->
+    <section class="products section-pad border-b border-[#d9ddd5]" id="solutions">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div>
+          <p class="text-xs font-mono font-bold text-[#606a5d] uppercase tracking-widest">ENTERPRISE PRACTICE AREAS</p>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-[#171b19] mt-2">Services & <em>solutions.</em></h2>
+        </div>
+        <a href="services/index.html" class="text-xs text-[#6b716c] hover:text-black font-bold flex items-center gap-1">
+          View all 4 practice pages <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </a>
+      </div>
+
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1000&q=80')"></div>
+          <div class="p-7 relative min-h-[180px]">
+            <span class="text-[10px] font-mono font-bold text-[#737c6d] uppercase tracking-widest">01 / CLOUD</span>
+            <h3 class="text-2xl font-bold text-[#171b19] mt-2 mb-2">Cloud Microservices & Distributed DevOps</h3>
+            <p class="text-xs text-[#6b716c] leading-relaxed max-w-sm">High-availability microservice architectures, Kubernetes cluster management, and zero-trust edge proxies.</p>
+            <a href="services/index.html" class="circle-link"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=80')"></div>
+          <div class="p-7 relative min-h-[180px]">
+            <span class="text-[10px] font-mono font-bold text-[#737c6d] uppercase tracking-widest">02 / AI & PIPELINES</span>
+            <h3 class="text-2xl font-bold text-[#171b19] mt-2 mb-2">Enterprise AI & Predictive Pipeline Engineering</h3>
+            <p class="text-xs text-[#6b716c] leading-relaxed max-w-sm">Custom LLM deployment, vector database search, and real-time data streaming pipelines built for high throughput.</p>
+            <a href="services/index.html" class="circle-link"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1000&q=80')"></div>
+          <div class="p-7 relative min-h-[180px]">
+            <span class="text-[10px] font-mono font-bold text-[#737c6d] uppercase tracking-widest">03 / FULL STACK</span>
+            <h3 class="text-2xl font-bold text-[#171b19] mt-2 mb-2">Full-Stack Platforms & Banking Systems</h3>
+            <p class="text-xs text-[#6b716c] leading-relaxed max-w-sm">End-to-end web and mobile applications engineered with Java Spring Boot, Next.js, Node.js, and PostgreSQL.</p>
+            <a href="services/index.html" class="circle-link"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&fit=crop&w=1000&q=80')"></div>
+          <div class="p-7 relative min-h-[180px]">
+            <span class="text-[10px] font-mono font-bold text-[#737c6d] uppercase tracking-widest">04 / HARDWARE & IOT</span>
+            <h3 class="text-2xl font-bold text-[#171b19] mt-2 mb-2">Embedded Systems & Industrial IoT Labs</h3>
+            <p class="text-xs text-[#6b716c] leading-relaxed max-w-sm">Microcontroller programming, sensor telemetry streaming, and edge firmware development for industrial nodes.</p>
+            <a href="services/index.html" class="circle-link"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- NEW CONTENT: GLOBAL RESEARCH & STUDENT SUPPORT ACTIVITIES -->
+    <section class="section-pad border-b border-[#d9ddd5] bg-[#f0f2eb]">
+      <div class="max-w-7xl mx-auto space-y-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-[#d9ddd5] pb-6 gap-4">
+          <div>
+            <span class="text-xs font-mono font-bold text-[#83ad3e] uppercase tracking-widest">CSR & ACADEMIC ADVANCEMENT</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-[#171b19] mt-2">Global Research & Student Support Initiatives</h2>
+          </div>
+          <p class="text-xs text-[#6b716c] max-w-md">
+            Through university hackathons, open-source grants, and guided project mentorship, we bridge the gap between academic theory and high-performance corporate engineering.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-white p-6 rounded border border-[#d9ddd5] space-y-3">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80" alt="Open Source Grants" class="w-full h-36 object-cover rounded mb-3">
+            <h3 class="text-lg font-bold text-[#171b19]">Open Source Grants</h3>
+            <p class="text-xs text-[#6b716c] leading-relaxed">
+              Providing financial and cloud infrastructure grants to student developer clubs building tools for sustainable smart cities and accessibility.
+            </p>
+          </div>
+
+          <div class="bg-white p-6 rounded border border-[#d9ddd5] space-y-3">
+            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80" alt="Faculty Workshops" class="w-full h-36 object-cover rounded mb-3">
+            <h3 class="text-lg font-bold text-[#171b19]">Faculty Development Workshops</h3>
+            <p class="text-xs text-[#6b716c] leading-relaxed">
+              Conducting hands-on workshops for university faculty on modern cloud deployment, Kubernetes containerization, and AI pipeline orchestration.
+            </p>
+          </div>
+
+          <div class="bg-white p-6 rounded border border-[#d9ddd5] space-y-3">
+            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80" alt="Scholarship" class="w-full h-36 object-cover rounded mb-3">
+            <h3 class="text-lg font-bold text-[#171b19]">Rural Tech Scholarship</h3>
+            <p class="text-xs text-[#6b716c] leading-relaxed">
+              Full tuition sponsorship and mentorship for high-potential engineering undergraduates from tier-2 and tier-3 rural technical institutes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT WORKS -->
+    <section class="section-pad bg-[#202723] text-white border-b border-gray-800" id="works">
+      <div class="max-w-7xl mx-auto space-y-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-gray-800 pb-6 gap-4">
+          <div>
+            <span class="px-3 py-1 rounded bg-[#c9f36a]/10 text-[#c9f36a] text-xs font-mono font-bold border border-[#c9f36a]/30">
+              FEATURED CLIENT ENGAGEMENTS & WORKS
+            </span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3">Delivering Enterprise Scale</h2>
+          </div>
+          <a href="works/index.html" class="text-xs text-[#c9f36a] hover:underline font-mono">Explore all case studies ↗</a>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-[#171b19] p-6 rounded-lg border border-gray-700 space-y-4">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="Fintech" class="w-full h-36 object-cover rounded">
+            <span class="text-[10px] font-mono text-[#c9f36a] font-bold uppercase">CASE STUDY 01 / FINTECH</span>
+            <h3 class="text-lg font-bold text-white">Global Banking Microservices Migration</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">
+              Engineered zero-downtime database migration and containerized Kubernetes services handling $1.2B daily throughput across European retail banks.
+            </p>
+            <a href="works/index.html" class="pt-2 text-[10px] font-mono text-[#c9f36a] block hover:underline">✓ Read Case Study Details ↗</a>
+          </div>
+
+          <div class="bg-[#171b19] p-6 rounded-lg border border-gray-700 space-y-4">
+            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80" alt="AI" class="w-full h-36 object-cover rounded">
+            <span class="text-[10px] font-mono text-[#c9f36a] font-bold uppercase">CASE STUDY 02 / AI PIPELINES</span>
+            <h3 class="text-lg font-bold text-white">Predictive Supply Chain AI Engine</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">
+              Deployed custom LLM RAG pipelines and vector search indexing for a Fortune 500 logistics conglomerate, reducing dispatch latency by 42%.
+            </p>
+            <a href="works/index.html" class="pt-2 text-[10px] font-mono text-[#c9f36a] block hover:underline">✓ Read Case Study Details ↗</a>
+          </div>
+
+          <div class="bg-[#171b19] p-6 rounded-lg border border-gray-700 space-y-4">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="IoT" class="w-full h-36 object-cover rounded">
+            <span class="text-[10px] font-mono text-[#c9f36a] font-bold uppercase">CASE STUDY 03 / HARDWARE & IOT</span>
+            <h3 class="text-lg font-bold text-white">Autonomous Industrial IoT Fleet Telemetry</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">
+              Built real-time MQTT telemetry pipelines connecting over 50,000 industrial sensors across manufacturing plants with edge anomaly detection.
+            </p>
+            <a href="works/index.html" class="pt-2 text-[10px] font-mono text-[#c9f36a] block hover:underline">✓ Read Case Study Details ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="section-pad border-b border-[#d9ddd5]" id="achievements">
+      <div class="max-w-7xl mx-auto space-y-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-[#d9ddd5] pb-6 gap-4">
+          <div>
+            <span class="text-xs font-mono font-bold text-[#83ad3e] uppercase tracking-widest">ACCREDITATIONS & AUDITS</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-[#171b19] mt-2">Recognized Excellence</h2>
+          </div>
+          <a href="achievements/index.html" class="text-xs text-[#171b19] hover:underline font-mono font-bold">View full audit documentation ↗</a>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-white p-6 rounded border border-[#d9ddd5] space-y-2">
+            <i class="fa-solid fa-shield-halved text-2xl text-[#83ad3e]"></i>
+            <h3 class="text-base font-bold text-[#171b19]">CMMI Level 5</h3>
+            <p class="text-xs text-[#6b716c]">Highest Maturity Rating in Software Process Quality & Optimization.</p>
+          </div>
+
+          <div class="bg-white p-6 rounded border border-[#d9ddd5] space-y-2">
+            <i class="fa-solid fa-lock text-2xl text-[#83ad3e]"></i>
+            <h3 class="text-base font-bold text-[#171b19]">ISO 27001:2022</h3>
+            <p class="text-xs text-[#6b716c]">Internationally Certified Information Security Management Systems.</p>
+          </div>
+
+          <div class="bg-white p-6 rounded border border-[#d9ddd5] space-y-2">
+            <i class="fa-solid fa-graduation-cap text-2xl text-[#83ad3e]"></i>
+            <h3 class="text-base font-bold text-[#171b19]">AICTE & UGC Aligned</h3>
+            <p class="text-xs text-[#6b716c]">National Educational Policy (NEP 2020) Virtual Internship Credit Framework.</p>
+          </div>
+
+          <div class="bg-white p-6 rounded border border-[#d9ddd5] space-y-2">
+            <i class="fa-solid fa-trophy text-2xl text-[#83ad3e]"></i>
+            <h3 class="text-base font-bold text-[#171b19]">Global Tech Award 2025</h3>
+            <p class="text-xs text-[#6b716c]">Named Top Industrial Incubator & Cloud Consulting Enterprise.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAREERS -->
+    <section class="section-pad border-b border-[#d9ddd5]" id="careers">
+      <div class="max-w-7xl mx-auto space-y-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-[#d9ddd5] pb-6 gap-4">
+          <div>
+            <p class="text-xs font-mono font-bold text-[#83ad3e] uppercase tracking-widest">CAREERS & INCUBATOR</p>
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-[#171b19] mt-1">Build the Future with Stratos</h2>
+          </div>
+          <a href="careers/index.html" class="text-xs text-[#171b19] hover:underline font-mono font-bold">Open careers portal ↗</a>
+        </div>
+
+        <div class="bg-[#202723] text-white rounded-xl p-8 sm:p-12 border-2 border-[#c9f36a] shadow-2xl relative overflow-hidden">
+          <div class="grid lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-8 space-y-5">
+              <div class="flex flex-wrap items-center gap-3">
+                <span class="px-3 py-1 rounded bg-[#c9f36a] text-[#171b19] font-mono text-xs font-extrabold uppercase">
+                  OFFICIAL TALENT INCUBATOR & SUMMER INTERNSHIP PROGRAM 2026
+                </span>
+                <span class="px-3 py-1 rounded bg-white/10 text-white font-mono text-xs font-bold border border-white/20">
+                  AICTE & UGC Credit Framework Aligned
+                </span>
+              </div>
+
+              <h3 class="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
+                Self-Paced Remote Project Tracks with Instant Credential Allotment
+                <span class="block text-[#c9f36a] text-lg sm:text-xl font-mono mt-1 font-semibold">(4 to 12 Weeks Tenure)</span>
+              </h3>
+
+              <p class="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-2xl">
+                B.Tech (CSE, IT, ECE, EEE) and MCA candidates complete self-paced guided project modules, receive a verifiable offer letter + certificate with dynamic QR code, and download editable 30-page IEEE project reports & PPT decks instantly.
+              </p>
+
+              <div class="grid sm:grid-cols-2 gap-3 text-xs text-gray-200 font-mono pt-2">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-[#c9f36a]"></i>
+                  <span>100% Guaranteed Slot Allotment</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-[#c9f36a]"></i>
+                  <span>Instant /verify Portal Indexing</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-[#c9f36a]"></i>
+                  <span>30-Page Editable IEEE Report Kit</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-[#c9f36a]"></i>
+                  <span>Viva Defense Slide Deck (PPT)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-4 bg-[#171b19] p-6 rounded-lg border border-white/15 text-center space-y-4">
+              <span class="text-xs font-mono text-gray-400 uppercase">Express Allotment Packages</span>
+              <div class="text-3xl font-extrabold font-mono text-white">
+                ₹299 <span class="text-xs font-normal text-gray-400">to</span> ₹999
+              </div>
+              <p class="text-[11px] text-gray-300">
+                Includes Official Certificate, Offer Letter, QR Verification & Submission Report.
+              </p>
+              <a href="careers/index.html" class="button button-green w-full text-center justify-center">
+                Explore Internship Tracks <span>↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-bold text-[#171b19] mb-6 flex items-center gap-2">
+            <i class="fa-solid fa-briefcase text-[#83ad3e]"></i>
+            <span>Full-Time Global Corporate Openings</span>
+          </h3>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-6 rounded border border-[#d9ddd5] space-y-3 flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#f5f5f0] text-gray-700 font-bold">HYDERABAD HUB</span>
+                <h4 class="text-base font-bold text-[#171b19] mt-2">Senior Cloud Architect</h4>
+                <p class="text-xs text-[#6b716c] mt-1">AWS / Kubernetes / Microservices (8+ Yrs)</p>
+              </div>
+              <button onclick="showApplicationModal('Senior Cloud Architect')" class="button button-dark py-2.5 text-xs text-center justify-center">
+                Apply Full-Time <span>↗</span>
+              </button>
+            </div>
+
+            <div class="bg-white p-6 rounded border border-[#d9ddd5] space-y-3 flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#f5f5f0] text-gray-700 font-bold">BENGALURU HUB</span>
+                <h4 class="text-base font-bold text-[#171b19] mt-2">Lead DevOps Engineer</h4>
+                <p class="text-xs text-[#6b716c] mt-1">CI/CD / Docker / Cloud WAF (5+ Yrs)</p>
+              </div>
+              <button onclick="showApplicationModal('Lead DevOps Engineer')" class="button button-dark py-2.5 text-xs text-center justify-center">
+                Apply Full-Time <span>↗</span>
+              </button>
+            </div>
+
+            <div class="bg-white p-6 rounded border border-[#d9ddd5] space-y-3 flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#f5f5f0] text-gray-700 font-bold">LONDON HUB</span>
+                <h4 class="text-base font-bold text-[#171b19] mt-2">Senior AI Systems Engineer</h4>
+                <p class="text-xs text-[#6b716c] mt-1">Python / PyTorch / RAG Pipelines (6+ Yrs)</p>
+              </div>
+              <button onclick="showApplicationModal('Senior AI Systems Engineer')" class="button button-dark py-2.5 text-xs text-center justify-center">
+                Apply Full-Time <span>↗</span>
+              </button>
+            </div>
+
+            <div class="bg-white p-6 rounded border border-[#d9ddd5] space-y-3 flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#f5f5f0] text-gray-700 font-bold">SINGAPORE HUB</span>
+                <h4 class="text-base font-bold text-[#171b19] mt-2">Lead Product Designer</h4>
+                <p class="text-xs text-[#6b716c] mt-1">Enterprise UI/UX / Design Systems (5+ Yrs)</p>
+              </div>
+              <button onclick="showApplicationModal('Lead Product Designer')" class="button button-dark py-2.5 text-xs text-center justify-center">
+                Apply Full-Time <span>↗</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERIFICATION GATEWAY REDIRECT MODULE (#verify-section) -->
+    <section class="section-pad bg-[#202723] text-white border-b border-gray-800" id="verify-section">
+      <div class="max-w-4xl mx-auto space-y-8">
+        <div class="text-center space-y-3">
+          <span class="px-3 py-1 rounded bg-[#c9f36a]/10 text-[#c9f36a] text-xs font-mono font-bold border border-[#c9f36a]/30">
+            OFFICIAL CREDENTIAL REGISTRY
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white">Credential Verification Audit Gateway</h2>
+          <p class="text-xs text-gray-300 max-w-lg mx-auto">
+            Enter candidate Serial ID or scan embedded QR code to audit record authenticity against our secure verification portal.
+          </p>
+        </div>
+
+        <div class="bg-[#171b19] p-3 rounded-lg border border-gray-700 flex flex-col sm:flex-row gap-3 shadow-2xl">
+          <input type="text" id="verify-input" placeholder="Enter Credential ID (e.g., STR-2026-8891)" value="STR-2026-8891" class="flex-grow bg-black/40 border border-gray-700 rounded px-4 py-3 text-xs font-mono text-white focus:outline-none focus:border-[#c9f36a]">
+          <button onclick="redirectToVerifyPage()" class="button button-green">
+            Audit Credential <span>↗</span>
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-2 text-xs font-mono text-gray-400">
+          <span>Preset Test IDs:</span>
+          <button onclick="setPresetId('STR-2026-8891')" class="px-2.5 py-1 rounded bg-[#171b19] text-[#c9f36a] border border-gray-700">STR-2026-8891</button>
+          <button onclick="setPresetId('AP-2026-4402')" class="px-2.5 py-1 rounded bg-[#171b19] text-[#c9f36a] border border-gray-700">AP-2026-4402</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="p-12 sm:p-20 bg-[#2d3b21] text-white flex flex-col md:flex-row items-center justify-between gap-8" id="contact">
+      <div>
+        <p class="text-xs font-mono text-[#c9f36a] uppercase font-bold">LET'S MOVE FORWARD</p>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-2">Have a software or academic challenge to solve?</h2>
+      </div>
+      <a href="contact.html" class="button button-green shrink-0">
+        Contact Corporate Desk <span>↗</span>
+      </a>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#171b19] text-white p-12 sm:p-16 border-t border-gray-800 text-xs">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-5 gap-8 pb-12 border-b border-gray-800">
+      <div class="md:col-span-2 space-y-3">
+        <span class="font-heading font-extrabold text-lg text-white block">STRATOS GLOBAL.</span>
+        <p class="text-gray-400 leading-relaxed text-[11px] max-w-sm">
+          Stratos Global Technologies Pvt. Ltd. is a CMMI Level 5 and ISO 27001:2022 accredited software enterprise providing cloud microservices, AI engineering, and virtual industrial internship incubation.
+        </p>
+        <div class="text-[10px] font-mono text-[#c9f36a]">
+          AICTE & UGC Credit Framework Compliant (NEP 2020)
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <span class="font-bold text-[#c9f36a] uppercase font-mono">India Hubs</span>
+        <div class="text-gray-400 text-[11px] space-y-2">
+          <div>
+            <strong class="text-white block">Hyderabad:</strong>
+            Building 4, Phase 3, HITEC City, Telangana 500081
+          </div>
+          <div>
+            <strong class="text-white block">Bengaluru:</strong>
+            Zone 2, Electronic City Phase 1, Karnataka 560100
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <span class="font-bold text-[#c9f36a] uppercase font-mono">Global Hubs</span>
+        <div class="text-gray-400 text-[11px] space-y-2">
+          <div>
+            <strong class="text-white block">London:</strong>
+            Level 18, Bank Tower, Canary Wharf, E14 5AA
+          </div>
+          <div>
+            <strong class="text-white block">Singapore:</strong>
+            Marina Bay Financial Centre Tower 1, 018981
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <span class="font-bold text-[#c9f36a] uppercase font-mono">Quick Links</span>
+        <ul class="space-y-1 text-gray-400 text-[11px]">
+          <li><a href="services/index.html" class="hover:underline">Cloud Practices</a></li>
+          <li><a href="works/index.html" class="hover:underline">Client Works</a></li>
+          <li><a href="achievements/index.html" class="hover:underline">Achievements</a></li>
+          <li><a href="careers/index.html" class="hover:underline">Careers & Incubator</a></li>
+          <li><a href="#verify-section" class="hover:underline">/verify Portal</a></li>
+          <li><a href="careers/index.html" class="text-[#c9f36a] underline">Instant Allotment</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto pt-6 flex flex-col sm:flex-row justify-between text-[10px] text-gray-500 font-mono gap-2">
+      <span>© 2026 Stratos Global Technologies Pvt. Ltd. All rights reserved.</span>
+      <div class="flex gap-4">
+        <a href="contact.html" class="hover:underline">Privacy Policy</a>
+        <a href="contact.html" class="hover:underline">Terms of Service</a>
+        <a href="#verify-section" class="hover:underline">Audit Desk</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING NOTICE WIDGET -->
+  <div id="floating-widget" class="fixed bottom-6 right-6 z-40 max-w-sm w-full bg-[#171b19] text-white p-4 rounded-xl border-2 border-[#c9f36a] shadow-2xl pulse-glow transition">
+    <div class="flex items-center justify-between text-[10px] font-mono text-[#c9f36a] font-bold">
+      <span class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#c9f36a] animate-ping"></span>
+        🔥 Summer 2026 Internship Allotment Open
+      </span>
+      <button onclick="document.getElementById('floating-widget').style.display='none'" class="text-gray-400 hover:text-white">✕</button>
+    </div>
+    <div class="text-xs font-bold text-white mt-1">Instant Verification & Credit Approved</div>
+    <p class="text-[11px] text-gray-300 mt-1 font-mono">PDF Certificate + IEEE Report + PPT Kit</p>
+    <a href="careers/index.html" class="button button-green w-full py-2.5 mt-3 text-xs justify-center block text-center">
+      Claim Slot ↗
+    </a>
+  </div>
+
+  <!-- APPLICATION MODAL -->
+  <div id="app-modal" class="hidden modal-overlay">
+    <div class="bg-[#171b19] border-2 border-[#c9f36a] text-white p-6 rounded-lg max-w-md w-full space-y-4 shadow-2xl">
+      <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+        <span class="text-xs font-mono font-bold text-[#c9f36a]">FULL-TIME CAREERS DISPATCH</span>
+        <button onclick="closeApplicationModal()" class="text-gray-400 hover:text-white">✕</button>
+      </div>
+      <div>
+        <h3 class="text-lg font-bold text-white" id="modal-role-title">Position Application</h3>
+        <p class="text-xs text-gray-300 mt-1">Please submit your professional CV and GitHub profile directly to our global talent acquisition team.</p>
+      </div>
+      <div class="bg-[#202723] p-3 rounded font-mono text-xs text-[#c9f36a]">
+        Email: careers@stratosglobal.tech
+      </div>
+      <button onclick="closeApplicationModal()" class="button button-green w-full justify-center py-2 text-xs">
+        Close Window
+      </button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    function showApplicationModal(roleTitle) {
+      document.getElementById('modal-role-title').innerText = 'Application: ' + roleTitle;
+      document.getElementById('app-modal').classList.remove('hidden');
+    }
+
+    function closeApplicationModal() {
+      document.getElementById('app-modal').classList.add('hidden');
+    }
+
+    function redirectToVerifyPage() {
+      const queryId = document.getElementById('verify-input').value.trim();
+      if (!queryId) return;
+      // Navigates to dedicated verification page with query parameter
+      window.location.href = `verify.html?id=${encodeURIComponent(queryId)}`;
+    }
+
+    function setPresetId(id) {
+      document.getElementById('verify-input').value = id;
+      redirectToVerifyPage();
+    }
+
+    function toggleNav() {
+      document.getElementById('nav-menu').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
