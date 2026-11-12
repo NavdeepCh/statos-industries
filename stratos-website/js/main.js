@@ -1,10 +1,60 @@
 document.getElementById('m')?.addEventListener('click',()=>document.getElementById('n')?.classList.toggle('open'));
 
-// Keep the careers portal focused on job openings while making the internship
-// opportunity easy to discover from its careers landing page.
+// Keep full-time Careers navigation local, while directing internship actions
+// to the dedicated internship portal.
 (() => {
+  const internshipUrl = 'https://stratos-internship.vercel.app/';
   const path = window.location.pathname.replace(/\/$/, '');
-  if (!path.endsWith('/careers/index.html') && !path.endsWith('/careers')) return;
+  const isCareersLanding = path.endsWith('/careers/index.html') || path.endsWith('/careers');
+  const isHomePage = path.endsWith('/index.html') || path === '';
+
+  // Rewrite only internship calls to action. Preserve the Careers item in the
+  // site navigation and all full-time job/application actions.
+  document.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href') || '';
+    const label = link.textContent.trim().toLowerCase();
+    const isCareersNavLink = link.closest('nav') && label === 'careers';
+    const isInternshipCta = /internship|allotment|claim slot|claim your slot|verify/i.test(label + ' ' + href);
+    if (!isCareersNavLink && isInternshipCta && /careers\/index\.html|verify\.html|#verify-section/.test(href)) {
+      link.href = internshipUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+    }
+  });
+
+  // Preserve a credential ID when the verification action is used.
+  const verifyButton = document.querySelector('[onclick*="redirectToVerifyPage"]');
+  if (verifyButton) {
+    verifyButton.onclick = event => {
+      event.preventDefault();
+      const credentialId = document.getElementById('verify-input')?.value.trim();
+      const destination = new URL(internshipUrl);
+      if (credentialId) destination.searchParams.set('id', credentialId);
+      window.location.assign(destination.href);
+    };
+  }
+
+  // Animated sliding letter navigation, applied to this site's primary nav.
+  document.querySelectorAll('nav a').forEach(link => {
+    if (link.dataset.lettersAnimated) return;
+    const label = link.textContent.trim();
+    if (!label) return;
+    link.dataset.lettersAnimated = 'true';
+    link.setAttribute('aria-label', label);
+    link.innerHTML = [...label].map((letter, index) =>
+      `<span aria-hidden="true" style="display:inline-block;transition:transform .28s ease ${index * 18}ms, color .2s;white-space:pre">${letter === ' ' ? '&nbsp;' : letter}</span>`
+    ).join('');
+    link.addEventListener('mouseenter', () => link.querySelectorAll('span').forEach((letter, index) => {
+      letter.style.transform = `translateY(${index % 2 ? '-4px' : '4px'})`;
+      letter.style.color = '#83ad3e';
+    }));
+    link.addEventListener('mouseleave', () => link.querySelectorAll('span').forEach(letter => {
+      letter.style.transform = '';
+      letter.style.color = '';
+    }));
+  });
+
+  if (!isHomePage && !isCareersLanding) return;
   if (sessionStorage.getItem('internship-promo-dismissed')) return;
 
   const styles = document.createElement('style');
@@ -40,8 +90,8 @@ document.getElementById('m')?.addEventListener('click',()=>document.getElementBy
         <li>Program details and eligibility in one place</li>
         <li>Credential and verification information</li>
       </ul>
-      <a class="internship-promo-claim" href="https://stratos-internship.vercel.app/" target="_blank" rel="noopener noreferrer">Claim your slot <span aria-hidden="true">↗</span></a>
-      <p class="internship-promo-note">Looking for a full-time role? Close this announcement to continue to Careers.</p>
+      <a class="internship-promo-claim" href="${internshipUrl}" target="_blank" rel="noopener noreferrer">Claim your slot <span aria-hidden="true">↗</span></a>
+      <p class="internship-promo-note">Looking for a full-time role? Use the Careers link in the navigation.</p>
     </section>`;
 
   const dismiss = () => {
