@@ -22,6 +22,19 @@ document.getElementById('m')?.addEventListener('click',()=>document.getElementBy
     }
   });
 
+  // The main-page floating internship ad remains visible after the popup is
+  // dismissed, and its Claim Slot button always opens the dedicated portal.
+  const floatingWidget = document.getElementById('floating-widget');
+  if (isHomePage && floatingWidget) {
+    floatingWidget.style.display = 'block';
+    const claimLink = floatingWidget.querySelector('a');
+    if (claimLink) {
+      claimLink.href = internshipUrl;
+      claimLink.target = '_blank';
+      claimLink.rel = 'noopener noreferrer';
+    }
+  }
+
   // Preserve a credential ID when the verification action is used.
   const verifyButton = document.querySelector('[onclick*="redirectToVerifyPage"]');
   if (verifyButton) {
@@ -97,6 +110,7 @@ document.getElementById('m')?.addEventListener('click',()=>document.getElementBy
   const dismiss = () => {
     sessionStorage.setItem('internship-promo-dismissed', 'true');
     backdrop.remove();
+    if (isHomePage && floatingWidget) floatingWidget.style.display = 'block';
   };
   backdrop.querySelector('.internship-promo-close').addEventListener('click', dismiss);
   backdrop.addEventListener('click', event => {
