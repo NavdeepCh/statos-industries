@@ -15,10 +15,10 @@
   <main>
     <h1>Opening the Stratos Internship Portal</h1>
     <p>Your internship credential verification is being redirected to the Stratos internship site.</p>
-    <p><a id="continue-link" href="https://stratos-internship.vercel.app/">Continue to the internship portal</a></p>
+    <p><a id="continue-link" href="https://stratos-internship.pages.dev/">Continue to the internship portal</a></p>
   </main>
   <script>
-    const destination = new URL("https://stratos-internship.vercel.app/");
+    const destination = new URL("https://stratos-internship.pages.dev/");
     const query = new URLSearchParams(window.location.search);
     const credentialId = query.get("id");
     if (credentialId) destination.searchParams.set("id", credentialId);
